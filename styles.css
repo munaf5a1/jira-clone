@@ -104,7 +104,7 @@ body {
     height: 50vh;
     width: 45vw;
     position: absolute;
-    display: flex;
+    display: none;
     top: 30%;
     left: 27%;
 }
