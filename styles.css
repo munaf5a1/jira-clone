@@ -48,6 +48,11 @@ body {
     background-color: black;
 }
 
+.ticket-color{
+    height: 1rem;
+    background-color: none;
+}
+
 .action-btn-cont {
     height: 3.5rem;
     width: 8rem;
@@ -71,7 +76,7 @@ body {
 }
 
 .remove-btn {
-    color: white !important;
+    color: white;
 }
 
 
@@ -83,7 +88,7 @@ body {
 
 .remove-btn:hover {
     background-color: red;
-    color: white !important;
+    color: white ;
     font-size: 3rem;
 }
 
@@ -155,4 +160,8 @@ body {
     margin-top: 5.5rem;
     margin-right: 1rem;
     font-size: 1.5rem;
+}
+
+.active{
+    border: 5px solid lightsalmon;
 }
