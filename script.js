@@ -8,8 +8,12 @@ let allPriorityColors = document.querySelectorAll(".priority-colors");
 let modalPriorityColor = "lightlightPink";
 let colors = ['lightPink' , 'lightGreen' , 'lightBlue' , 'black'];
 
+let toolBoxColors = document.querySelectorAll(".color-box")
+
 let lockClass = 'fa-lock';
 let unlockClass =  "fa-lock-open";
+
+let ticketsArr = [];
 
 let addFlag = false;
 
@@ -21,6 +25,8 @@ addBtn.addEventListener("click", function(){
         modalCont.style.display = "none";
     }
 })
+
+
 
 allPriorityColors.forEach(function(priorityColor){
     priorityColor.addEventListener("click", function(){
@@ -41,11 +47,12 @@ document.addEventListener("keydown",function(e){
 })
 
 
-function createTicket(taskDetails,priorityColor) {
+function createTicket(taskDetails,priorityColor,ticketId) {
+    let id = ticketId || shortid();
     let ticketCont = document.createElement("div");
     ticketCont.setAttribute("class","ticket-cont")
     ticketCont.innerHTML = ` <div class="ticket-color-cont ${priorityColor}"></div>
-            <div class="ticket-id">1234</div>
+            <div class="ticket-id">${id}</div>
             <div class="ticket-task">${taskDetails}</div>
             <div class="ticket-lock">
                 <i class="fa-solid fa-lock"></i>
@@ -54,7 +61,30 @@ function createTicket(taskDetails,priorityColor) {
    handleLock(ticketCont);
    handleRemove(ticketCont);
    handleColors(ticketCont);
+   if (!ticketId) {
+    ticketsArr.push({priorityColor,taskDetails,id:id})
+   }
+   console.log("ticketsArr-=", ticketsArr)
    modalCont.style.display = "none";
+}
+
+for (let index = 0; index < toolBoxColors.length; index++) {
+    toolBoxColors[index].addEventListener("click", function(e) {
+        let selectedFilter =  toolBoxColors[index].classList[0];
+        // console.log("selectedFilter-=", selectedFilter) 
+        let filteredTickets = ticketsArr.filter(function(ticket) {
+            return selectedFilter == ticket.priorityColor       
+        })      
+        let allTickets = document.querySelectorAll(".ticket-cont")
+        for (let i = 0; i < allTickets.length; i++) {
+            allTickets[i].remove();
+        }
+
+        filteredTickets.forEach(function(ticket){
+            createTicket(ticket.taskDetails,ticket.priorityColor,ticket.id)
+        })
+    })
+    
 }
 
 function handleLock(ticket) {
